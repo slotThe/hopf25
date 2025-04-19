@@ -1,0 +1,335 @@
+\documentclass[aspectratio=169,12pt,professionalfont]{beamer}
+\usepackage[type=presentation,font=palatino,osf,math=fancy]{styles/style}
+\usetheme{m}
+\bibliography{bib}
+
+\renewcommand*{\hom}[1]{\ensuremath{\lfloor#1\rfloor}}
+\newcommand*{\cohom}[1]{\ensuremath{\lceil#1\rceil}}
+\newcommand*{\Ind}{\mathsf{Ind}}
+\newcommand*{\bbcomod}[1][B]{\Tetramod[#1]}
+\renewcommand*{\kvect}{\mathsf{vect}}
+\renewcommand*{\kVect}{\mathsf{Vect}}
+
+\newcommand*{\pageBase}{tony-zorman.com/hopf25}
+\newcommand*{\website}{https://\pageBase}
+
+\title{Reconstruction for Lax Module Monads}
+\msubtitle{Foregoing the fibre functor in \(n\) easy steps!}
+\msubtitlelink{Based on joint work with Matti Stroiński:
+  \href{https://arxiv.org/abs/2409.00793}{\texttt{arXiv:2409.00793}}%
+}
+\author[Tony Zorman]{\centering{%
+    Tony Zorman \\
+    \footnotesize\texttt{\href{mailto:tony.zorman@tu-dresden.de}{tony.zorman@tu-dresden.de}}}}
+\date{25.04.2025}
+\institute{%
+  Technische Universität Dresden%
+  \hfil\textbullet\hfil%
+  Zellescher Weg 12--14%
+  \hfil\textbullet\hfil%
+  01069 Dresden%
+  \hfil\textbullet\hfil%
+  Germany%
+  \hfil\hfil%
+}
+\qrCode{\website}
+
+\begin{document}
+
+\maketitle
+
+\begin{frame}[standout]
+  Given a monoidal category \(\cat{C}\),
+  are all left \(\cat{C}\)-module categories
+  equivalent to the modules of
+  an algebra object in \(\cat{C}\)?
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}[{\cite{ostrik03:modul-hopf,Etingof2015}}]\label{finiterecon}
+    Let \(\cat{C}\) be a \alert<2>{finite} \alert<3,4>{tensor category}
+    and let \(\cat{M}\) be a \alert<2>{finite} abelian \(\cat{C}\)\hyp{}module category,
+    such that the evaluation functor \(\blank \triangleright \ell \from \cat{C} \to \cat{M}\) is \alert<3>{exact},
+    for all \(\ell \in \cat{M}\).
+    Then there exists an algebra object \(A \in \cat{C}\)
+    such that there is an equivalence of \(\cat{C}\)\hyp{}module categories \(\mathrm{mod}_{\cat{C}}(A) \simeq \cat{M}\).
+  \end{theorem}
+  \pause%
+  Finiteness assumptions,
+  \pause%
+  exactness assumptions,
+  \pause%
+  and \alert<5>{rigidity assumptions}.
+  \pause\pause%
+  \begin{proposition*}[{\cite{douglas19}}]
+    In the absence of rigidity,
+    there are finite abelian \(\cat{C}\)-module categories that cannot be realised as the modules of an algebra object in \(\cat{C}\).
+  \end{proposition*}
+\end{frame}
+
+\begin{frame}[standout]
+  Given a monoidal category \(\cat{C}\),
+  are all left \(\cat{C}\)-module categories
+  equivalent to the modules of
+  a \alert{monad} on \(\cat{C}\)?\vphantom{algebraobject}
+\end{frame}
+
+\begin{frame}\frametitle{The setup}
+  Let \(\cat{C}\) be a \textcolor{gray}{\(\Bbbk\)-linear} monoidal,
+  and \(\cat{M}, \cat{N}\) \textcolor{gray}{\(\Bbbk\)-linear} left \(\cat{C}\)-module categories.
+  \pause%
+  \begin{align*}
+    \otimes \from \cat{C} \kotimes \cat{C} \to \cat{C},
+    \qquad\qquad
+    \lact \from \cat{C} \kotimes \cat{M} \to \cat{M}.
+  \end{align*}
+  \pause%
+  such that for all \(x, y, z \in \cat{C}\) and \(m \in \cat{M}\), \eg,
+  \[
+    (x \otimes y) \otimes z \cong x \otimes (y \otimes z)
+    \qquad\text{and}\qquad
+    (x \otimes y) \lact \ell \cong x \lact (y \lact \ell).
+  \]
+
+  \pause%
+  A functor \(F \from \cat{M} \to \cat{N}\) is a \emph{lax \(\cat{C}\)-module functor}
+  if there exists \textcolor{gray}{an appropriately associative and unital} natural transformation
+  \[
+    F_2\from \blank \lact F(\bblank) \nt F(\blank \lact \bblank).
+  \]
+  \pause%
+  The functor \(F\) is \emph{oplax} if \(F_2\) goes the other way,
+  and \emph{strong} if it is invertible.
+\end{frame}
+
+\begin{frame}\frametitle{The Yoneda lemma™}
+  \begin{proposition*}
+    There is an equivalence of \(\cat{C}\)-module categories
+    \begin{equation*}
+      \cat{M} \simeq \mathsf{Str}\cat{C}\mathsf{Mod}(\cat{C},\cat{M}),\qquad
+      \pause
+      \ell \mapsto \alert<5>{\blank \lact \ell},\qquad
+      \pause
+      F1 \mapsfrom F.
+    \end{equation*}
+    \pause%
+    In particular, \(\cat{C}^{\textcolor{gray}{\tensorop}} \simeq \mathsf{Str}\cat{C}\mathsf{Mod}(\cat{C},\cat{C})\).
+  \end{proposition*}
+  \pause%
+\end{frame}
+
+\begin{frame}[standout]
+  Study cases in which \(\blank \lact \ell\) admits a right adjoint.
+  \pause%
+  The resulting monad canonically has a lax \(\cat{C}\)-module structure.
+  \pause%
+  Then apply Beck's monadicity theorem.
+\end{frame}
+
+\begin{frame}\frametitle{Kelly and Beck}
+  \begin{theorem}[Kelly's doctrinal adjunctions,~\alt<-2>{\cite{kelly74:doctr}}{\cite{kelly74:doctr,halbig23:diagr-comod-monad}}]
+    Given an adjunction
+    \alt<-2>{\(\adj{F}{U}{\cat{C}}{\cat{D}}\)}{\(\adj{F}{U}{\cat{M}}{\cat{N}}\)}
+    between
+    \alt<-2>{\alert<2>{monoidal} categories}{\(\cat{C}\)-\alert<3>{module} categories},
+    oplax
+    \alt<-2>{\alert<2>{monoidal}}{\(\cat{C}\)-\alert<3>{module}}
+    structures on \(F\) are in bijective correspondence with
+    lax \alt<-2>{\alert<2>{monoidal}}{\(\cat{C}\)-\alert<3>{module}}
+    structures on \(U\).
+  \end{theorem}
+  \pause\pause\pause%
+  An adjunction \(\adj{F}{U}{\cat{C}}{\cat{M}}\) is called \emph{monadic} if the canonical comparison functor
+  \(K\from \cat{M} \to \cat{C}^{UF}\) is an equivalence.
+  \pause%
+  \begin{theorem}[\alt<6>{Abelian monadicity,~\cite{ben-zvi18:integ}}{Beck's monadicity theorem}]
+    An adjunction is monadic if and only if \(U\)\!
+    \alt<6>{is exact and reflects zero objects}{creates \(U\)-split coequalisers}.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}\frametitle{Internal projectives}
+  Let \(\cat{C}\) and \(\cat{M}\) be abelian.
+  \pause%
+  An object \(\ell \in \cat{M}\) is \emph{closed} if there is an adjunction
+  \[
+    \adj{\blank \lact \ell}{\hom{\ell, \blank}}{\cat{C}}{\cat{M}}.
+  \]
+  \pause%
+  A closed object is called \emph{\(\cat{C}\)-projective} if \(\hom{\ell, \blank}\) is (right) exact
+  \pause%
+  and a \emph{\(\cat{C}\)-generator} if it is faithful.
+  \pause%
+  \begin{example}
+    \begin{itemize}
+      \item Every object in a rigid monoidal category \(\cat{C}\) is \(\cat{C}\)-projective.\pause%
+      \item Finite \(\cat{C}\)-module categories over finite tensor categories always\\
+      admit \(\cat{C}\)-projective \(\cat{C}\)-generators~\cite{Etingof2015,douglas19}.
+    \end{itemize}
+  \end{example}
+\end{frame}
+
+\begin{frame}[standout]
+  Only the Eilenberg–Moore category of an oplax \(\cat{C}\)-module monad has a canonical \(\cat{C}\)-module structure.
+\end{frame}
+
+\begin{frame}\frametitle{Linton coequalisers}
+  \begin{definition}
+    The \emph{Linton coequaliser} of \(x \in \cat{C}\) and \(m \in \cat{M}^T\) is:
+    \[
+      \begin{tikzcd}[ampersand replacement=\&]
+        {T(x \lact Tm)} \& {T(x \lact m)} \& {x \blact m.}
+        \arrow["\raisebox{0.3em}{\(T(x \,\lact\, \nabla_{m})\)}", shift left=1, from=1-1, to=1-2]
+        \arrow["\raisebox{-0.3em}{\(\mu_{x \lact m}\circ TT_{\mathsf{a};x,m}\)}"', shift right=1, from=1-1, to=1-2]
+        \arrow[two heads, from=1-2, to=1-3]
+      \end{tikzcd}%
+    \]
+  \end{definition}
+  \pause%
+  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+    The Eilenberg–Moore category of any right exact lax \(\cat{C}\)-module monad
+    can be equipped with a canonical \(\cat{C}\)-module structure by mean of Linton coequalisers.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}\frametitle{The reconstruction result}
+  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+    Let \(\cat{C}\) be an abelian monoidal category,
+    \(\cat{M}\) an abelian \(\cat{C}\)\hyp{}module category,
+    and assume that \(\ell \in \cat{M}\) is a closed \(\cat{C}\)\hyp{}projective \(\cat{C}\)\hyp{}generator.
+    \pause%
+    Then there is an equivalence of \(\cat{C}\)\hyp{}module categories
+    \vspace{-0.2cm}\[
+      \cat{M} \simeq \cat{C}^{\hom{\ell, \blank \,\lact\, \ell}}.
+    \]\vspace{-0.2cm}
+    \pause%
+    Furthermore, there is a bijection
+    \vspace{-0.2cm}\begin{align*}
+      \faktor{\{(\cat{M},\ell)\ \text{as before}\}}{\cat{M} \simeq \cat{N}}
+      &\xleftrightarrow{\ \cong\ }
+        \Bigg\{
+        \begin{aligned}
+          &\text{Right exact lax \(\cat{C}\)\hyp{}module}\\
+          &\text{monads on \(\cat{C}\)}
+        \end{aligned}
+        \Bigg\}
+        /\, \cat{C}^T \!\simeq\! \cat{C}^S \\
+      (\cat{M},\ell) &\longmapsto \hom{\ell,-\lact \ell} \\
+      (\cat{C}^T, T1) &\longmapsfrom T
+    \end{align*}
+  \end{theorem}
+\end{frame}
+
+\begin{frame}\frametitle{Back to Hopf algebras}
+  Let \(H\) be a Hopf algebra and \(\cat{C} \defeq \tetramodfd[H]{}\)
+  \pause%
+  \(\implies \Ind(\cat{C}) \simeq \Tetramod[H]{}\).
+  \pause%
+
+  Let \(\cat{M}\) be an abelian \(\cat{C}\)\hyp{}module category
+  such that \(\Ind(\cat{M})\)
+  admits a coclosed \(\Ind(\cat{C})\)\hyp{}injective \(\Ind(\cat{C})\)\hyp{}cogenerator.
+  \pause%
+
+  Then there exists an \(H\)\hyp{}comodule coalgebra \(C\)
+  such that \(\Ind(\cat{M}) \simeq \mathsf{Comod}_{H}C\) as \(\Ind(\cat{C})\)\hyp{}module categories.
+  \pause%
+
+  This restricts to a \(\cat{C}\)\hyp{}module equivalence \(\cat{M} \simeq \mathsf{comod}_{H}C\).
+\end{frame}
+
+\section{(Op)lax module functors in action}
+
+\begin{frame}\frametitle{Hopf trimodules}
+  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+    Let \(B\) be a bialgebra, and define \(\cat{V} \defeq \bComod\).
+    \pause%
+    There is a monoidal equivalence
+    \begin{align*}
+      \Trimod &\to \mathsf{LexfLax}\cat{V}\mathsf{Mod}(\cat{V}, \cat{V})\\
+      X &\mapsto (X \cotens_B \blank, \chi)
+    \end{align*}
+    between the category of Hopf trimodules, and
+    the category of left exact finitary lax \(\cat{V}\)\hyp{}module endofunctors on \(\cat{V}\).
+  \end{theorem}
+\end{frame}
+
+\begin{frame}\frametitle{The interchanger}
+  For all \(M, N \in \bbcomod\),
+  the arrow
+  \[
+    \chi_{M, N} \from M \kotimes (X \cotens_B N) \to X \cotens_B (M \kotimes N)
+  \]
+  \pause%
+  is defined by
+  \[
+    \tikzfig{def:bicomodule-interchange}
+  \]
+\end{frame}
+
+\begin{frame}\frametitle{Deducing a theorem for Hopf trimodules}
+  \begin{proposition*}
+    Let \(\cat{C}\) be a left closed monoidal category such that every lax \(\cat{C}\)\hyp{}module endofunctor of \(\cat{C}\) is strong%
+    —in other words, that the monoidal embedding
+    \[
+      \mathsf{Str}\cat{C}\mathsf{Mod}(\cat{C},\cat{C}) \longhookrightarrow \mathsf{Lax}\cat{C}\mathsf{Mod}(\cat{C},\cat{C})
+    \]
+    is an equivalence.
+    Then \(\cat{C}\) is left rigid.
+  \end{proposition*}
+  \pause%
+  \begin{corollary}[{\cite{stroinski2024:reconstr}}]
+    A bialgebra \(B\) admits a twisted antipode if and only if the canonical functor
+    \(B \kotimes \blank\from \Tetramod[B] \to \Tetramod[B][B][][B]\) is an equivalence.
+  \end{corollary}
+\end{frame}
+
+\begin{frame}\frametitle{Fusion operators for Hopf monads}
+  \begin{proposition*}[{\cite{stroinski2024:reconstr}}]
+    Let \(\adj{F}{U}{\cat{C}}{\cat{D}}\) be an oplax monoidal adjunction.
+    \pause%
+    The strong monoidal structure of \(U\) turns \(\cat{C}\) into a \(\cat{D}\)\hyp{}module category via \(\blank \lact \bblank \;\defeq\; U(\blank) \otimes \bblank\).
+    \pause%
+    The bimonad \(T \defeq UF\) on \(\cat{C}\) becomes an oplax \(\cat{D}\)\hyp{}module monad.
+    \pause%
+    In particular, the right fusion operator is the ``free part'' of the coherence morphism:
+    \[
+      T_{2;F,\Id} = T_{\mathsf{rf}}.
+    \]
+    \pause%
+    Further, \(T_{\mathsf{rf}}\) is an isomorphism if and only if \(T_2\) is.
+  \end{proposition*}
+\end{frame}
+
+\begin{frame}\frametitle{Thanks!}
+  \centering
+  \begin{minipage}[bt]{0.4\textwidth}
+    \qrcode[hyperlink,height=3.5cm]{\website}
+  \end{minipage}\begin{minipage}[bt]{0.5\textwidth}
+    \raggedright%
+    \href{\website}{\texttt{\pageBase}}\\[1cm]
+    \href{https://arxiv.org/abs/2409.00793}{%
+      Reconstruction of module categories
+      in the infinite and non-rigid settings.
+      \texttt{arXiv:2409.00793}}
+  \end{minipage}
+\end{frame}
+
+\begin{frame}[allowframebreaks]\frametitle{References}
+  \nocite{hausser99:integ-theor-quasi-hopf-algeb}
+  \nocite{Moerdijk2002}
+  \nocite{deligne02:categ}
+  \nocite{ostrik03:modul-hopf}
+  \nocite{ostrik04:tensor-p}
+  \nocite{Bruguieres2011}
+  \nocite{saracco17:hopf}
+  \nocite{halbig23:diagr-comod-monad}
+  \printbibliography[heading=none]%
+\end{frame}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

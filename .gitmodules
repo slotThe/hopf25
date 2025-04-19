@@ -1,0 +1,6 @@
+[submodule "latex-styles"]
+	path = latex-styles
+	url = https://github.com/slotthe/latex-styles
+[submodule "beamer-theme-m"]
+	path = beamer-theme-m
+	url = https://github.com/slotThe/beamer-theme-m
