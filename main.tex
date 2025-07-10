@@ -1,5 +1,5 @@
 \documentclass[aspectratio=169,12pt,professionalfont]{beamer}
-\usepackage[type=presentation,font=palatino,osf,math=fancy]{styles/style}
+\usepackage[type=beamer,font=palatino,osf,math=fancy]{styles/style}
 \usetheme{m}
 \bibliography{bib}
 
@@ -10,7 +10,7 @@
 \renewcommand*{\kvect}{\mathsf{vect}}
 \renewcommand*{\kVect}{\mathsf{Vect}}
 
-\newcommand*{\pageBase}{tony-zorman.com/hopf25}
+\newcommand*{\pageBase}{tony-zorman.com/ct2025}
 \newcommand*{\website}{https://\pageBase}
 
 \title{Reconstruction for Lax Module Monads}
@@ -21,22 +21,35 @@
 \author[Tony Zorman]{\centering{%
     Tony Zorman \\
     \footnotesize\texttt{\href{mailto:tony.zorman@tu-dresden.de}{tony.zorman@tu-dresden.de}}}}
-\date{25.04.2025}
-\institute{%
-  Technische Universität Dresden%
-  \hfil\textbullet\hfil%
-  Zellescher Weg 12--14%
-  \hfil\textbullet\hfil%
-  01069 Dresden%
-  \hfil\textbullet\hfil%
-  Germany%
-  \hfil\hfil%
-}
+\date{2025-07-17}
+\institute{}
 \qrCode{\website}
 
 \begin{document}
 
 \maketitle
+
+\begin{frame}\frametitle{Tannaka Reconstruction}
+  \[
+    \alt<4->{\hspace{-1.15cm}\vspace{0.08cm}%
+      \begin{tikzcd}[ampersand replacement=\&]
+        {(\cat{C}^T, \otimes, 1)} \\
+        {(\cat{C}, \otimes, 1)}
+        \arrow["{(U^T, U^T_2, U^T_0)}"', curve={height=12pt}, from=1-1, to=2-1]
+        \arrow["{F^T}"', curve={height=12pt}, from=2-1, to=1-1]
+        \arrow["T"', from=2-1, to=2-1, loop, in=305, out=235, distance=10mm]
+      \end{tikzcd}%
+    }{%
+      \begin{tikzcd}[ampersand replacement=\&]
+        |[visible on=<2->]|{\cat{C}^T} \\
+        {\alt<-2>{\cat{C}}{(\cat{C}, \otimes, 1)}}
+        \arrow[visible on=<2->, "{U^T}"', curve={height=12pt}, from=1-1, to=2-1]% XXX alert
+        \arrow[visible on=<2->, "{F^T}"', curve={height=12pt}, from=2-1, to=1-1]
+        \arrow["T"', from=2-1, to=2-1, loop, in=305, out=235, distance=10mm]
+      \end{tikzcd}%
+    }
+  \]
+\end{frame}
 
 \begin{frame}[standout]
   Given a monoidal category \(\cat{C}\),
@@ -88,12 +101,12 @@
   \[
     (x \otimes y) \otimes z \cong x \otimes (y \otimes z)
     \qquad\text{and}\qquad
-    (x \otimes y) \lact \ell \cong x \lact (y \lact \ell).
+    (x \otimes y) \lact m \cong x \lact (y \lact m).
   \]
 
   \pause%
   A functor \(F \from \cat{M} \to \cat{N}\) is a \emph{lax \(\cat{C}\)-module functor}
-  if there exists \textcolor{gray}{an appropriately associative and unital} natural transformation
+  if there exists an associative and unital natural transformation
   \[
     F_2\from \blank \lact F(\bblank) \nt F(\blank \lact \bblank).
   \]
@@ -102,13 +115,58 @@
   and \emph{strong} if it is invertible.
 \end{frame}
 
+\tikzstyle{blackdot}=[fill=block body.fg, draw, shape=circle, scale=0.4, tikzit draw=black, tikzit shape=circle, tikzit fill=black]
+\begin{frame}\frametitle{Module categories as deloopings}
+  The \emph{delooping}
+  \(\mathbf{B}\alt<-1>{\cat{C}}{\cat{M}}\)
+  of a
+  \alt<-1>{monoidal}{\alert{module}}
+  category
+  \(\alt<-1>{\cat{C}}{\cat{M}}\)
+  is a 2-category with
+  \alt<-1>{one}{two}
+  object\only<2>{s}.
+  \[
+    \begin{tikzpicture}[scale=3]
+      \begin{pgfonlayer}{nodelayer}
+        \node [style=blackdot] (0) at (0, 0) {};
+        \node [style=blackdot] (1) at (0, 0) {};
+        \node [style=none] (2) at (0.2, 0.3) {\tiny\(1\)};
+        \node [style=none] (3) at (-0.3, -0.2) {\tiny\(x\)};
+        \node [visible on=<2->, style=blackdot] (4) at (0.925, 0) {};
+        \node [style=none] (5) at (0.425, 0.25) {};
+        \node [style=none] (6) at (0.425, 0) {};
+        \node [style=none] (7) at (0.425, -0.25) {};
+        \node [style=none] (8) at (0.425, 0.125) {};
+        \node [style=none] (9) at (0.425, -0.125) {};
+        \node [visible on=<2->, style=none] (10) at (0.75, 0.25) {\tiny$m$};
+      \end{pgfonlayer}
+      \begin{pgfonlayer}{edgelayer}
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=-45, out=-105, loop] (0) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=-75, out=-135, loop] (0) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=135, out=75, loop] (0) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=105, out=45, loop] (0) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=135, out=-165, loop] (1) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=165, out=-135, loop] (1) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=-45, out=15, loop] (1) to ();
+        \draw [decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction=decorate, in=-15, out=45, loop] (1) to ();
+        \draw [decoration={markings, mark=at position 1 with {\arrow{>}}}, postaction=decorate, visible on=<2->, in=360, out=135] (4) to (5.center);
+        \draw [decoration={markings, mark=at position 1 with {\arrow{>}}}, postaction=decorate, visible on=<2->] (4) to (6.center);
+        \draw [decoration={markings, mark=at position 1 with {\arrow{>}}}, postaction=decorate, visible on=<2->, in=0, out=-135] (4) to (7.center);
+        \draw [decoration={markings, mark=at position 1 with {\arrow{>}}}, postaction=decorate, visible on=<2->, in=360, out=165] (4) to (8.center);
+        \draw [decoration={markings, mark=at position 1 with {\arrow{>}}}, postaction=decorate, visible on=<2->, in=0, out=-165] (4) to (9.center);
+      \end{pgfonlayer}
+    \end{tikzpicture}
+  \]
+\end{frame}
+
 \begin{frame}\frametitle{The Yoneda lemma™}
   \begin{proposition*}
     There is an equivalence of \(\cat{C}\)-module categories
     \begin{equation*}
       \cat{M} \simeq \mathsf{Str}\cat{C}\mathsf{Mod}(\cat{C},\cat{M}),\qquad
       \pause
-      \ell \mapsto \alert<5>{\blank \lact \ell},\qquad
+      m \mapsto \alert<5>{\blank \lact m},\qquad
       \pause
       F1 \mapsfrom F.
     \end{equation*}
@@ -119,14 +177,15 @@
 \end{frame}
 
 \begin{frame}[standout]
-  Study cases in which \(\blank \lact \ell\) admits a right adjoint.
+  Study cases in which \(\blank \lact m\) admits a right adjoint.
   \pause%
   The resulting monad canonically has a lax \(\cat{C}\)-module structure.
   \pause%
   Then apply Beck's monadicity theorem.
 \end{frame}
 
-\begin{frame}\frametitle{Kelly and Beck}
+\begin{frame}[t]\frametitle{To Kelly and Beck}
+  \vspace{.5cm}
   \begin{theorem}[Kelly's doctrinal adjunctions,~\alt<-2>{\cite{kelly74:doctr}}{\cite{kelly74:doctr,halbig23:diagr-comod-monad}}]
     Given an adjunction
     \alt<-2>{\(\adj{F}{U}{\cat{C}}{\cat{D}}\)}{\(\adj{F}{U}{\cat{M}}{\cat{N}}\)}
@@ -138,13 +197,14 @@
     lax \alt<-2>{\alert<2>{monoidal}}{\(\cat{C}\)-\alert<3>{module}}
     structures on \(U\).
   \end{theorem}
-  \pause\pause\pause%
-  An adjunction \(\adj{F}{U}{\cat{C}}{\cat{M}}\) is called \emph{monadic} if the canonical comparison functor
-  \(K\from \cat{M} \to \cat{C}^{UF}\) is an equivalence.
-  \pause%
-  \begin{theorem}[\alt<6>{Abelian monadicity,~\cite{ben-zvi18:integ}}{Beck's monadicity theorem}]
-    An adjunction is monadic if and only if \(U\)\!
-    \alt<6>{is exact and reflects zero objects}{creates \(U\)-split coequalisers}.
+  \vspace{1cm}
+  \begin{theorem}<5->[\alt<6>{Abelian monadicity}{Beck's monadicity theorem}]
+    An adjunction \(\adj{F}{U}{\cat{C}}{\cat{D}}\) is monadic if\only<-5>{ and only if}
+    \alt<6>{%
+      \(U\)\! is exact and reflects zero objects.%
+    }{%
+      \(U\)\! is conservative, \(\cat{D}\) has coequalisers of \(U\)-split pairs, and \(U\) preserves them.%
+    }%
   \end{theorem}
 \end{frame}
 
@@ -186,7 +246,7 @@
     \]
   \end{definition}
   \pause%
-  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+  \begin{theorem}[{\cite{aguiar18:monad,stroinski2024:reconstr}}]
     The Eilenberg–Moore category of any right exact lax \(\cat{C}\)-module monad
     can be equipped with a canonical \(\cat{C}\)-module structure by mean of Linton coequalisers.
   \end{theorem}
@@ -198,9 +258,9 @@
     \(\cat{M}\) an abelian \(\cat{C}\)\hyp{}module category,
     and assume that \(\ell \in \cat{M}\) is a closed \(\cat{C}\)\hyp{}projective \(\cat{C}\)\hyp{}generator.
     \pause%
-    Then there is an equivalence of \(\cat{C}\)\hyp{}module categories
+    Then
     \vspace{-0.2cm}\[
-      \cat{M} \simeq \cat{C}^{\hom{\ell, \blank \,\lact\, \ell}}.
+      \cat{M} \simeq_{\lact} \cat{C}^{\hom{\ell, \blank \,\lact\, \ell}}.
     \]\vspace{-0.2cm}
     \pause%
     Furthermore, there is a bijection
@@ -213,29 +273,9 @@
           &\text{monads on \(\cat{C}\)}
         \end{aligned}
         \Bigg\}
-        /\, \cat{C}^T \!\simeq\! \cat{C}^S \\
-      (\cat{M},\ell) &\longmapsto \hom{\ell,-\lact \ell} \\
-      (\cat{C}^T, T1) &\longmapsfrom T
+        /\, \cat{C}^T \!\simeq\! \cat{C}^S
     \end{align*}
   \end{theorem}
-\end{frame}
-
-\begin{frame}\frametitle{Back to Hopf algebras}
-  Let \(H\) be a Hopf algebra and \(\cat{C} \defeq \tetramodfd[H]{}\)
-  \pause%
-  \(\implies \Ind(\cat{C}) \simeq \Tetramod[H]{}\).
-  \pause%
-
-  Let \(\cat{M}\) be an abelian \(\cat{C}\)\hyp{}module category
-  such that \(\Ind(\cat{M})\)
-  admits a coclosed \(\Ind(\cat{C})\)\hyp{}injective \(\Ind(\cat{C})\)\hyp{}cogenerator.
-  \pause%
-
-  Then there exists an \(H\)\hyp{}comodule coalgebra \(C\)
-  such that \(\Ind(\cat{M}) \simeq \mathsf{Comod}_{H}C\) as \(\Ind(\cat{C})\)\hyp{}module categories.
-  \pause%
-
-  This restricts to a \(\cat{C}\)\hyp{}module equivalence \(\cat{M} \simeq \mathsf{comod}_{H}C\).
 \end{frame}
 
 \section{(Op)lax module functors in action}
