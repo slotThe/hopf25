@@ -13,8 +13,8 @@
 \newcommand*{\pageBase}{tony-zorman.com/ct2025}
 \newcommand*{\website}{https://\pageBase}
 
-\title{Reconstruction for Lax Module Monads}
-\msubtitle{Foregoing the fibre functor in \(n\) easy steps!}
+\title{Infinite and Non-Rigid Reconstruction Theory}
+\msubtitle{Or: Reconstruction for lax module monads}
 \msubtitlelink{Based on joint work with Matti Stroiński:
   \href{https://arxiv.org/abs/2409.00793}{\texttt{arXiv:2409.00793}}%
 }
@@ -29,103 +29,43 @@
 
 \maketitle
 
-\begin{frame}\frametitle{Tannaka Reconstruction}
+\begin{frame}\frametitle{Tannaka duality}
   \[
-    \alt<4->{\hspace{-1.15cm}\vspace{0.08cm}%
-      \begin{tikzcd}[ampersand replacement=\&]
-        {(\cat{C}^T, \otimes, 1)} \\
-        {(\cat{C}, \otimes, 1)}
-        \arrow["{(U^T, U^T_2, U^T_0)}"', curve={height=12pt}, from=1-1, to=2-1]
-        \arrow["{F^T}"', curve={height=12pt}, from=2-1, to=1-1]
-        \arrow["T"', from=2-1, to=2-1, loop, in=305, out=235, distance=10mm]
-      \end{tikzcd}%
-    }{%
-      \begin{tikzcd}[ampersand replacement=\&]
-        |[visible on=<2->]|{\cat{C}^T} \\
-        {\alt<-2>{\cat{C}}{(\cat{C}, \otimes, 1)}}
-        \arrow[visible on=<2->, "{U^T}"', curve={height=12pt}, from=1-1, to=2-1]% XXX alert
-        \arrow[visible on=<2->, "{F^T}"', curve={height=12pt}, from=2-1, to=1-1]
-        \arrow["T"', from=2-1, to=2-1, loop, in=305, out=235, distance=10mm]
-      \end{tikzcd}%
-    }
+    \begin{tikzcd}[ampersand replacement=\&]
+      |[visible on=<2->]|{\cat{C}^T\here\!\!\!\!\!\!\!} \\
+      {\cat{C}}
+      \arrow[visible on=<2->, shorten <= -5pt, "{U^T}"', shift right=2, from=1-1, to=2-1]
+      \arrow[visible on=<2->, shorten >= -6pt, "{F^T}"', shift right=2, from=2-1, to=1-1]
+      \arrow["{T\here[b]\!\!\!}"', from=2-1, to=2-1, loop, in=305, out=235, distance=10mm]
+    \end{tikzcd}
   \]
-\end{frame}
-
-\begin{frame}[standout]
-  Given a monoidal category \(\cat{C}\),
-  are all left \(\cat{C}\)-module categories
-  equivalent to the modules of
-  an algebra object in \(\cat{C}\)?
-\end{frame}
-
-\begin{frame}
-  \begin{theorem}[{\cite{ostrik03:modul-hopf,Etingof2015}}]\label{finiterecon}
-    Let \(\cat{C}\) be a \alert<2>{finite} \alert<3,4>{tensor category}
-    and let \(\cat{M}\) be a \alert<2>{finite} abelian \(\cat{C}\)\hyp{}module category,
-    such that the evaluation functor \(\blank \triangleright \ell \from \cat{C} \to \cat{M}\) is \alert<3>{exact},
-    for all \(\ell \in \cat{M}\).
-    Then there exists an algebra object \(A \in \cat{C}\)
-    such that there is an equivalence of \(\cat{C}\)\hyp{}module categories \(\mathrm{mod}_{\cat{C}}(A) \simeq \cat{M}\).
-  \end{theorem}
-  \pause%
-  Finiteness assumptions,
-  \pause%
-  exactness assumptions,
-  \pause%
-  and \alert<5>{rigidity assumptions}.
-  \pause\pause%
-  \begin{proposition*}[{\cite{douglas19}}]
-    In the absence of rigidity,
-    there are finite abelian \(\cat{C}\)-module categories that cannot be realised as the modules of an algebra object in \(\cat{C}\).
-  \end{proposition*}
-\end{frame}
-
-\begin{frame}[standout]
-  Given a monoidal category \(\cat{C}\),
-  are all left \(\cat{C}\)-module categories
-  equivalent to the modules of
-  a \alert{monad} on \(\cat{C}\)?\vphantom{algebraobject}
+  \popup<3->{(a.south)++(1,0)}[(a.mid)]{Monoidal, closed, and rigid\\structures compatible with \(U^T\)}
+  \popup<4->[east]{(b.south)++(-1,0)}[(b.west)++(-.35,.1)]{Oplax monoidal, Hopf structures}
 \end{frame}
 
 \begin{frame}\frametitle{The setup}
   Let \(\cat{C}\) be a \textcolor{gray}{\(\Bbbk\)-linear} monoidal,
-  and \(\cat{M}, \cat{N}\) \textcolor{gray}{\(\Bbbk\)-linear} left \(\cat{C}\)-module categories.
-  \pause%
-  \begin{align*}
-    \otimes \from \cat{C} \kotimes \cat{C} \to \cat{C},
-    \qquad\qquad
-    \lact \from \cat{C} \kotimes \cat{M} \to \cat{M}.
-  \end{align*}
-  \pause%
-  such that for all \(x, y, z \in \cat{C}\) and \(m \in \cat{M}\), \eg,
-  \[
-    (x \otimes y) \otimes z \cong x \otimes (y \otimes z)
-    \qquad\text{and}\qquad
-    (x \otimes y) \lact m \cong x \lact (y \lact m).
-  \]
-
-  \pause%
-  A functor \(F \from \cat{M} \to \cat{N}\) is a \emph{lax \(\cat{C}\)-module functor}
-  if there exists an associative and unital natural transformation
-  \[
-    F_2\from \blank \lact F(\bblank) \nt F(\blank \lact \bblank).
-  \]
-  \pause%
-  The functor \(F\) is \emph{oplax} if \(F_2\) goes the other way,
-  and \emph{strong} if it is invertible.
+  and \(\cat{M}, \cat{N}\) \textcolor{gray}{\(\Bbbk\)-linear} (left) \(\cat{C}\)-module categories.
+  \uncover<2->{
+    \begin{align*}
+      \otimes \from \cat{C} \kotimes \cat{C} \to \cat{C},
+      \qquad\qquad
+      \lact \from \cat{C} \kotimes \cat{M} \to \cat{M}.
+    \end{align*}
+    \uncover<3->{
+      such that for all \(x, y, z \in \cat{C}\) and \(m \in \cat{M}\), \eg,
+      \[
+        (x \otimes y) \otimes z \cong x \otimes (y \otimes z)
+        \qquad\text{and}\qquad
+        (x \otimes y) \lact m \cong x \lact (y \lact m).
+      \]%
+    }%
+  }%
 \end{frame}
 
 \tikzstyle{blackdot}=[fill=block body.fg, draw, shape=circle, scale=0.4, tikzit draw=black, tikzit shape=circle, tikzit fill=black]
 \begin{frame}\frametitle{Module categories as deloopings}
-  The \emph{delooping}
-  \(\mathbf{B}\alt<-1>{\cat{C}}{\cat{M}}\)
-  of a
-  \alt<-1>{monoidal}{\alert{module}}
-  category
-  \(\alt<-1>{\cat{C}}{\cat{M}}\)
-  is a 2-category with
-  \alt<-1>{one}{two}
-  object\only<2>{s}.
+  The \emph{delooping} of a \alt<-1>{monoidal}{\alert{module}} category is a bicategory with \alt<-1>{one}{\alert{two}} object\only<2>{s}.
   \[
     \begin{tikzpicture}[scale=3]
       \begin{pgfonlayer}{nodelayer}
@@ -160,6 +100,101 @@
   \]
 \end{frame}
 
+\begin{frame}[standout]
+  Given a monoidal category \(\cat{C}\),
+  are all left \(\cat{C}\)-module categories
+  equivalent to the modules of
+  an algebra object in \(\cat{C}\)?
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}[Ostrik, Etingof--Gelaki--Nikshych--Ostrik]\label{finiterecon}
+    \begin{itemize}[noitemsep]
+      \item<1-> \(\cat{C}\) \alert<5>{finite} \alert<6>{tensor category};
+      \item<2-> \(\cat{M}\) \alert<5>{finite} abelian \(\cat{C}\)\hyp{}module category; and
+      \item<3-> the functor \(\blank \triangleright m \from \cat{C} \to \cat{M}\) is \alert<6>{exact} for all \(m \in \cat{M}\).
+    \end{itemize}
+    \uncover<4->{%
+      Then there exists an algebra object \(A \in \cat{C}\)
+      such that there is an equivalence of \(\cat{C}\)\hyp{}module categories \(\mathop{\mathrm{mod}}_{\cat{C}}A \simeq \cat{M}\).}
+  \end{theorem}
+  \begin{proposition*}<7>[Douglas--Schommer-Pries--Snyder]
+    In the absence of rigidity,
+    there are finite abelian \(\cat{C}\)-module categories that cannot be realised as the modules of an algebra object in \(\cat{C}\).
+  \end{proposition*}
+\end{frame}
+
+\begin{frame}[standout]
+  Given a monoidal category \(\cat{C}\),
+  are all left \(\cat{C}\)-module categories
+  equivalent to the modules of
+  a \alert{monad} on \(\cat{C}\)?\vphantom{algebraobject}
+\end{frame}
+
+\tikzstyle{Front}=[-, draw=block body.fg, fill=block body.bg, opacity=0.8]
+\tikzstyle{morphism-edge}=[-, draw=block body.fg, line width=0.2em]
+\tikzstyle{Backgr}=[-, draw=block body.fg, line width=0.1em]
+\tikzstyle{blackdot}=[fill=block body.fg, draw, shape=circle, scale=0.6, tikzit draw=black, tikzit shape=circle, tikzit fill=black]
+\begin{frame} \frametitle{Lax module functors}
+  A functor \(F \from \cat{M} \to \cat{N}\) is a \emph{lax \(\cat{C}\)-module functor}
+  if there exists an associative and unital natural transformation
+  \[
+    F_2\from \blank \lact F(\bblank) \nt\here\!\!\!\! F(\blank \lact \bblank).
+  \]
+  \popup<2>{(a.mid)++(-3,-1.5)}[(a.west)++(-.5,-.2)]{\(G(\blank) \otimes G(\bblank) \nt G(\blank \otimes \bblank)\)}
+  \popup<3>{(a.mid)++(-3,-2.5)}[(a.west)++(-.5,-.2)]{\(\mathscale{0.4}{\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+          \node [style=none] (0) at (-2.5, 1.25) {};
+          \node [style=none] (1) at (0, 1.25) {};
+          \node [style=none] (2) at (-2.5, -2.25) {};
+          \node [style=none] (3) at (0, -2.25) {};
+          \node [style=none] (4) at (2.75, -3) {};
+          \node [style=none] (5) at (3.5, -1.5) {};
+          \node [style=none] (6) at (3.5, 2) {};
+          \node [style=none] (7) at (2.75, 0.75) {};
+          \node [style=none] (23) at (2.9, -1.75) {$F$};
+          \node [style=none] (24) at (3, -1.5) {};
+          \node [style=none] (25) at (0, 0) {};
+          \node [style=none] (26) at (-1.25, 1.25) {};
+          \node [style=none] (27) at (-1.3, 1.5) {$F$};
+          \node [style=blackdot] (28) at (-.1, 0) {};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+          \draw [style=morphism-edge, in=90, out=-15] (25.center) to (24.center);
+          \draw [style=Front, in=180, out=30] (3.center) to (5.center);
+          \draw [style=Backgr, in=180, out=30] (3.center) to (5.center);
+          \draw [style=Front] (4.center)
+            to (7.center)
+            to [in=-30, out=180] (1.center)
+            to (3.center)
+            to [in=180, out=-45] cycle;
+            \draw [style=Front] (4.center)
+            to (7.center)
+            to [in=-30, out=180] (1.center)
+            to (3.center)
+            to [in=180, out=-45] cycle;
+          \draw [style=Front] (5.center) to (6.center);
+          \draw [style=Backgr] (1.center) to (0.center);
+          \draw [style=Backgr] (0.center) to (2.center);
+          \draw [style=Backgr] (2.center) to (3.center);
+          \draw [style=Backgr] (6.center) to (5.center);
+          \draw [style=Backgr, in=180, out=30] (1.center) to (6.center);
+          \draw [style=Backgr, in=180, out=-30] (1.center) to (7.center);
+          \draw [style=Backgr] (7.center) to (4.center);
+          \draw [style=Backgr, in=180, out=-45] (3.center) to (4.center);
+          \draw [style=Backgr] (1.center) to (3.center);
+          \draw [style=morphism-edge, in=270, out=165] (25.center) to (26.center);
+	\end{pgfonlayer}
+      \end{tikzpicture}}\)}
+  \uncover<4->{%
+    \(F\) can also be…
+    \begin{itemize}
+      \item<4-> \emph{oplax}: \(F(\blank \lact \bblank) \nt \blank \lact F(\bblank)\);
+      \item<5-> \emph{strong}: \(\blank \lact F(\bblank) \Iso F(\blank \lact \bblank)\).
+    \end{itemize}%
+  }
+\end{frame}
+
 \begin{frame}\frametitle{The Yoneda lemma™}
   \begin{proposition*}
     There is an equivalence of \(\cat{C}\)-module categories
@@ -179,14 +214,15 @@
 \begin{frame}[standout]
   Study cases in which \(\blank \lact m\) admits a right adjoint.
   \pause%
-  The resulting monad canonically has a lax \(\cat{C}\)-module structure.
+  The resulting \alert<4>{monad} canonically has a \alert<4>{lax \(\cat{C}\)-module} structure.
   \pause%
   Then apply Beck's monadicity theorem.
+  \pause%
 \end{frame}
 
 \begin{frame}[t]\frametitle{To Kelly and Beck}
   \vspace{.5cm}
-  \begin{theorem}[Doctrinal adjunction;~\alt<-2>{Kelly}{Kelly, Halbig--Z}]
+  \begin{theorem}[\alt<-2>{Kelly}{Kelly, Halbig--Z}]
     Given an adjunction
     \alt<-2>{\(\adj{F}{U}{\cat{C}}{\cat{D}}\)}{\(\adj{F}{U}{\cat{M}}{\cat{N}}\)}
     between
@@ -294,7 +330,7 @@
   \end{theorem}
 \end{frame}
 
-\begin{frame}\frametitle{The interchanger}
+\begin{frame}\frametitle{The Yetter–Drinfeld braiding}
   For all \(M, N \in \bbcomod\),
   the arrow
   \[
@@ -309,12 +345,12 @@
 
 \begin{frame}\frametitle{Deducing a theorem for Hopf trimodules}
   \begin{proposition*}
-    Let \(\cat{C}\) be a left closed monoidal category such that every lax \(\cat{C}\)\hyp{}module endofunctor of \(\cat{C}\) is strong%
-    —in other words, that the monoidal embedding
+    Let \(\cat{C}\) be a left closed monoidal category such that the canonical embedding
     \[
       \mathsf{Str}\cat{C}\mathsf{Mod}(\cat{C},\cat{C}) \longhookrightarrow \mathsf{Lax}\cat{C}\mathsf{Mod}(\cat{C},\cat{C})
     \]
     is an equivalence.
+    \pause%
     Then \(\cat{C}\) is left rigid.
   \end{proposition*}
   \pause%
