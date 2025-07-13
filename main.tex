@@ -186,7 +186,7 @@
 
 \begin{frame}[t]\frametitle{To Kelly and Beck}
   \vspace{.5cm}
-  \begin{theorem}[Kelly's doctrinal adjunctions,~\alt<-2>{\cite{kelly74:doctr}}{\cite{kelly74:doctr,halbig23:diagr-comod-monad}}]
+  \begin{theorem}[Doctrinal adjunction;~\alt<-2>{Kelly}{Kelly, Halbig--Z}]
     Given an adjunction
     \alt<-2>{\(\adj{F}{U}{\cat{C}}{\cat{D}}\)}{\(\adj{F}{U}{\cat{M}}{\cat{N}}\)}
     between
@@ -224,7 +224,7 @@
     \begin{itemize}
       \item Every object in a rigid monoidal category \(\cat{C}\) is \(\cat{C}\)-projective.\pause%
       \item Finite \(\cat{C}\)-module categories over finite tensor categories always\\
-      admit \(\cat{C}\)-projective \(\cat{C}\)-generators~\cite{Etingof2015,douglas19}.
+      admit \(\cat{C}\)-projective \(\cat{C}\)-generators.
     \end{itemize}
   \end{example}
 \end{frame}
@@ -246,14 +246,14 @@
     \]
   \end{definition}
   \pause%
-  \begin{theorem}[{\cite{aguiar18:monad,stroinski2024:reconstr}}]
+  \begin{theorem}[Aguiar--Haim--López Franco, Stroiński--Z]
     The Eilenberg–Moore category of any right exact lax \(\cat{C}\)-module monad
-    can be equipped with a canonical \(\cat{C}\)-module structure by mean of Linton coequalisers.
+    can be equipped with a canonical \(\cat{C}\)-module structure by means of Linton coequalisers.
   \end{theorem}
 \end{frame}
 
 \begin{frame}\frametitle{The reconstruction result}
-  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+  \begin{theorem}[Stroiński--Z]
     Let \(\cat{C}\) be an abelian monoidal category,
     \(\cat{M}\) an abelian \(\cat{C}\)\hyp{}module category,
     and assume that \(\ell \in \cat{M}\) is a closed \(\cat{C}\)\hyp{}projective \(\cat{C}\)\hyp{}generator.
@@ -281,7 +281,7 @@
 \section{(Op)lax module functors in action}
 
 \begin{frame}\frametitle{Hopf trimodules}
-  \begin{theorem}[{\cite{stroinski2024:reconstr}}]
+  \begin{theorem}[Stroiński--Z]
     Let \(B\) be a bialgebra, and define \(\cat{V} \defeq \bComod\).
     \pause%
     There is a monoidal equivalence
@@ -318,26 +318,24 @@
     Then \(\cat{C}\) is left rigid.
   \end{proposition*}
   \pause%
-  \begin{corollary}[{\cite{stroinski2024:reconstr}}]
+  \begin{corollary}[Stroiński--Z]
     A bialgebra \(B\) admits a twisted antipode if and only if the canonical functor
     \(B \kotimes \blank\from \Tetramod[B] \to \Tetramod[B][B][][B]\) is an equivalence.
   \end{corollary}
 \end{frame}
 
 \begin{frame}\frametitle{Fusion operators for Hopf monads}
-  \begin{proposition*}[{\cite{stroinski2024:reconstr}}]
-    Let \(\adj{F}{U}{\cat{C}}{\cat{D}}\) be an oplax monoidal adjunction.
+  \begin{proposition*}[Stroiński--Z]
+    The bimonad \(T \defeq UF\) of an oplax monoidal adjunction \(\adj{F}{U}{\cat{C}}{\cat{D}}\)
+    is canonically an oplax \(\cat{D}\)\hyp{}module monad.
+
     \pause%
-    The strong monoidal structure of \(U\) turns \(\cat{C}\) into a \(\cat{D}\)\hyp{}module category via \(\blank \lact \bblank \;\defeq\; U(\blank) \otimes \bblank\).
-    \pause%
-    The bimonad \(T \defeq UF\) on \(\cat{C}\) becomes an oplax \(\cat{D}\)\hyp{}module monad.
-    \pause%
-    In particular, the right fusion operator is the ``free part'' of the coherence morphism:
+    The right fusion operator is the ``free part'' of the coherence morphism:
     \[
-      T_{2;F,\Id} = T_{\mathsf{rf}}.
+      T_{2;F,\Id} = T_{\mathsf{rf}} \from T(T \otimes \Id) \nt T \otimes T \Alt<2>{.}{,}
     \]
     \pause%
-    Further, \(T_{\mathsf{rf}}\) is an isomorphism if and only if \(T_2\) is.
+    and \(T_{\mathsf{rf}}\) is an isomorphism if and only if \(T_2\) is.
   \end{proposition*}
 \end{frame}
 
@@ -356,14 +354,25 @@
 \end{frame}
 
 \begin{frame}[allowframebreaks]\frametitle{References}
-  \nocite{hausser99:integ-theor-quasi-hopf-algeb}
+  \nocite{Bruguieres2011}
+  \nocite{Etingof2015}
   \nocite{Moerdijk2002}
+  \nocite{aguiar18:monad}
   \nocite{deligne02:categ}
+  \nocite{douglas19}
+  \nocite{halbig23:diagr-comod-monad}
+  \nocite{hausser99:integ-theor-quasi-hopf-algeb}
+  \nocite{kelly74:doctr}
   \nocite{ostrik03:modul-hopf}
   \nocite{ostrik04:tensor-p}
-  \nocite{Bruguieres2011}
   \nocite{saracco17:hopf}
-  \nocite{halbig23:diagr-comod-monad}
+  \nocite{stroinski2024:reconstr}
+  \def\bibfont{\tiny}
+  \setbeamerfont{bibliography item}{size=\scriptsize}
+  \setbeamerfont{bibliography entry author}{size=\scriptsize}
+  \setbeamerfont{bibliography entry title}{size=\scriptsize}
+  \setbeamerfont{bibliography entry location}{size=\scriptsize}
+  \setbeamerfont{bibliography entry note}{size=\scriptsize}
   \printbibliography[heading=none]%
 \end{frame}
 
